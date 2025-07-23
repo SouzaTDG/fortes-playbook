@@ -1,3 +1,4 @@
+/* Este arquivo está completo e não sofreu alterações nesta etapa. */
 :root {
     --cor-primaria: #2563eb;
     --cor-fundo: #f8fafc;
@@ -7,6 +8,7 @@
     --cor-borda: #e2e8f0;
     --cor-sombra: rgba(149, 157, 165, 0.1);
     --cor-hover-fundo: #f1f5f9;
+    --cor-erro: #e53e3e;
 }
 
 [data-theme="dark"] {
@@ -18,6 +20,7 @@
     --cor-borda: #334155;
     --cor-sombra: rgba(0, 0, 0, 0.2);
     --cor-hover-fundo: #334155;
+    --cor-erro: #fc8181;
 }
 
 body { 
@@ -38,6 +41,12 @@ body {
     border: 1px solid var(--cor-borda);
     box-shadow: 0 8px 24px var(--cor-sombra); 
     transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 header { 
@@ -149,7 +158,9 @@ progress::-webkit-progress-value {
     grid-column: 1 / -1; 
 }
 
-.form-group label, .form-group-radio .question { 
+.form-group label, 
+.form-group-radio .question,
+.conditional-block .question {
     margin-bottom: 0.5rem; 
     font-weight: 600; 
     color: var(--cor-texto-principal); 
@@ -157,7 +168,7 @@ progress::-webkit-progress-value {
 
 .form-group input[type="text"], 
 .form-group input[type="date"], 
-.form-group textarea { 
+.form-group textarea {
     padding: 0.75rem; 
     border: 1px solid var(--cor-borda); 
     border-radius: 8px; 
@@ -165,11 +176,25 @@ progress::-webkit-progress-value {
     background-color: var(--cor-fundo);
     color: var(--cor-texto-principal);
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    width: 100%;
 }
 
-.form-group input:focus, .form-group textarea:focus { 
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+    max-width: 100%;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
     outline: 2px solid var(--cor-primaria); 
     border-color: transparent; 
+}
+
+.form-group input.error, 
+.form-group textarea.error {
+    border-color: var(--cor-erro) !important;
+    background-color: var(--cor-hover-fundo);
 }
 
 .form-group-radio {
@@ -192,19 +217,29 @@ progress::-webkit-progress-value {
 .radio-options { 
     padding-top: 0.75rem; 
     display: flex; 
-    gap: 1.5rem; 
+    gap: 0.75rem; 
+}
+
+.radio-options input[type="radio"] {
+    display: none;
 }
 
 .radio-options label { 
     cursor: pointer; 
-    font-weight: normal; 
+    font-weight: 500;
     color: var(--cor-texto-secundario); 
-    transition: color 0.3s ease; 
+    background-color: var(--cor-hover-fundo);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease; 
 }
 
 .radio-options input[type="radio"]:checked + label { 
     color: var(--cor-primaria); 
     font-weight: 600; 
+    background-color: var(--cor-container);
+    border-color: var(--cor-primaria);
 }
 
 .theme-switch-wrapper { 
@@ -258,8 +293,204 @@ input:checked + .slider:before {
     transform: translateX(24px); 
 }
 
+.action-content {
+    display: none;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--cor-borda);
+    padding-top: 1.5rem;
+}
+
+.action-content.active {
+    display: block;
+}
+
+.assinaturas-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--cor-borda);
+    transition: border-color 0.3s ease;
+}
+
+.assinaturas-section h2 {
+    color: var(--cor-texto-principal);
+    margin-bottom: 1rem;
+}
+
+.assinatura-content {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.assinatura-content .form-group {
+    flex-grow: 1;
+}
+
+.assinatura-content button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--cor-primaria);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.assinatura-content button:hover {
+    opacity: 0.85;
+}
+
+.assinatura-resultado {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--cor-hover-fundo);
+    border-radius: 8px;
+    color: var(--cor-texto-secundario);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    min-height: 2.5em;
+    white-space: pre-wrap;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.form-group.full-width.conditional-block {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.form-group.hidden {
+    display: none;
+}
+
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.button-group input[type="radio"] {
+    display: none;
+}
+
+.button-group label {
+    padding: 0.6rem 1.5rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.button-group input[type="radio"]:checked + label {
+    background-color: var(--cor-primaria);
+    color: white;
+    border-color: var(--cor-primaria);
+}
+
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+}
+
+.custom-select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.custom-select-trigger:hover {
+    border-color: var(--cor-primaria);
+}
+
+.custom-select-trigger span {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.custom-select-wrapper .arrow {
+    transition: transform 0.3s ease;
+}
+
+.custom-select-wrapper.open .arrow {
+    transform: rotate(180deg);
+}
+
+.custom-options {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background-color: var(--cor-container);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--cor-sombra);
+    z-index: 10;
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+    display: none;
+}
+
+.custom-select-wrapper.open .custom-options {
+    display: block;
+}
+
+.custom-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.custom-option:hover {
+    background-color: var(--cor-hover-fundo);
+}
+
+.custom-option.selected {
+    font-weight: 600;
+    color: var(--cor-primaria);
+}
+
+.date-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.today-btn {
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-hover-fundo);
+    color: var(--cor-texto-secundario);
+    font-weight: 500;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.today-btn:hover {
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
+}
+
 @media print {
-    .header-actions, .tabs, .progress-section {
+    .header-actions, .tabs, .progress-section, .assinaturas-section {
         display: none;
     }
     body {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playbook Interativo - Fortes & Fortes</title>
+    <title>Checklist Iniciais - Fortes & Fortes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
@@ -13,7 +13,9 @@
 
     <div class="container" id="playbook-container">
         <header>
-            <h1>Playbook Interativo</h1>
+            <div class="logo-title">
+                <h1>Checklist Iniciais</h1>
+            </div>
             <div class="header-actions">
                 <div class="theme-switch-wrapper">
                     <label class="theme-switch" for="dark-mode-toggle">
@@ -33,44 +35,147 @@
 
         <nav class="tabs">
             <button class="tab-button active" data-tab="infoGerais">Informações Gerais</button>
-            <button class="tab-button" data-tab="execucao">Execução</button>
+            <button class="tab-button" data-tab="tipoAcao">Tipo de Ação</button>
         </nav>
 
         <main class="form-container">
             <form id="infoGerais" class="tab-content active">
                 <h2>Informações Gerais</h2>
                 <div class="form-grid">
-                    <div class="form-group"><label for="inicial-n">Inicial n.º *</label><input type="text" id="inicial-n" class="track-progress"></div>
-                    <div class="form-group"><label for="data-elaboracao">Data da elaboração *</label><input type="date" id="data-elaboracao" class="track-progress"></div>
-                    <div class="form-group"><label for="data-revisao">Data da revisão *</label><input type="date" id="data-revisao" class="track-progress"></div>
-                    <div class="form-group"><label for="nome-parte-adversa">Nome da parte adversa *</label><input type="text" id="nome-parte-adversa" class="track-progress"></div>
+                    <div class="form-group"><label for="inicial-n">Inicial n.º *</label><input type="text" id="inicial-n" required></div>
+                    <div class="form-group">
+                        <label for="data-elaboracao">Data da elaboração *</label>
+                        <div class="date-input-wrapper">
+                            <input type="date" id="data-elaboracao" required>
+                            <button type="button" class="today-btn" data-target="data-elaboracao">Hoje</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="data-revisao">Data da revisão *</label>
+                        <div class="date-input-wrapper">
+                            <input type="date" id="data-revisao" required>
+                            <button type="button" class="today-btn" data-target="data-revisao">Hoje</button>
+                        </div>
+                    </div>
+                    <div class="form-group"><label for="nome-parte-adversa">Nome da parte adversa *</label><input type="text" id="nome-parte-adversa" required></div>
                 </div>
-                <div class="form-group full-width"><label for="acao-solicitada">Ação solicitada pelo cliente *</label><input type="text" id="acao-solicitada" class="track-progress"></div>
-                <div class="form-group full-width"><label for="observacoes">Observações do(a) Revisor(a) *</label><textarea id="observacoes" rows="4" class="track-progress"></textarea></div>
+                <div class="form-group full-width"><label for="acao-solicitada">Ação solicitada pelo cliente *</label><input type="text" id="acao-solicitada" required></div>
+                
+                <div class="form-group full-width conditional-block">
+                    <label class="question">Após a verificação dos documentos e requisitos necessários, é possível o ajuizamento da ação postulada? *</label>
+                    <div class="button-group">
+                        <input type="radio" id="ajuizamento-sim" name="radio-ajuizamento"><label for="ajuizamento-sim">Sim</label>
+                        <input type="radio" id="ajuizamento-nao" name="radio-ajuizamento"><label for="ajuizamento-nao">Não</label>
+                    </div>
+                </div>
+
+                <div id="bloco-acao-ajuizada" class="form-group full-width hidden">
+                    <label for="qual-acao-ajuizar">Qual ação será ajuizada?</label>
+                    <input type="text" id="qual-acao-ajuizar" placeholder="Descreva a ação...">
+                </div>
+
+                <div id="bloco-motivo-nao" class="form-group full-width hidden">
+                    <label for="motivo-nao-ajuizar">Motivo *</label>
+                    <textarea id="motivo-nao-ajuizar" rows="3" placeholder="Descreva o motivo..."></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="observacoes">Observações do(a) Revisor(a) *</label>
+                    <textarea id="observacoes" rows="4" required></textarea>
+                </div>
             </form>
 
-            <form id="execucao" class="tab-content">
-                <h2>Checklist de Execução de Título Extrajudicial</h2>
-                <div class="form-group-radio track-progress"><label class="question">Prescrição do Título: Analisada?</label><div class="radio-options"><input type="radio" id="prescricao-sim" name="radio-prescricao"><label for="prescricao-sim">Sim</label><input type="radio" id="prescricao-na" name="radio-prescricao"><label for="prescricao-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Multiplicidade de Títulos: Verificado se todas as partes figuram como devedores?</label><div class="radio-options"><input type="radio" id="multiplicidade-sim" name="radio-multiplicidade"><label for="multiplicidade-sim">Sim</label><input type="radio" id="multiplicidade-na" name="radio-multiplicidade"><label for="multiplicidade-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Foro de Ajuizamento: Confirmado?</label><div class="radio-options"><input type="radio" id="foro-sim" name="radio-foro"><label for="foro-sim">Sim</label><input type="radio" id="foro-na" name="radio-foro"><label for="foro-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Dados das Partes: Conferidos (CPF/CNPJ, endereço, etc.)?</label><div class="radio-options"><input type="radio" id="dados-partes-sim" name="radio-dados-partes"><label for="dados-partes-sim">Sim</label><input type="radio" id="dados-partes-na" name="radio-dados-partes"><label for="dados-partes-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Existência de menores incapazes: Solicitou a intimação do Ministério Público?</label><div class="radio-options"><input type="radio" id="menores-sim" name="radio-menores"><label for="menores-sim">Sim</label><input type="radio" id="menores-na" name="radio-menores"><label for="menores-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Assinatura da CCB: Todas as partes assinaram?</label><div class="radio-options"><input type="radio" id="assinatura-ccb-sim" name="radio-assinatura-ccb"><label for="assinatura-ccb-sim">Sim</label><input type="radio" id="assinatura-ccb-na" name="radio-assinatura-ccb"><label for="assinatura-ccb-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Validade das Assinaturas: Confirmada?</label><div class="radio-options"><input type="radio" id="validade-assinaturas-sim" name="radio-validade-assinaturas"><label for="validade-assinaturas-sim">Sim</label><input type="radio" id="validade-assinaturas-na" name="radio-validade-assinaturas"><label for="validade-assinaturas-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Garantia na CCB: Indicada?</label><div class="radio-options"><input type="radio" id="garantia-ccb-sim" name="radio-garantia-ccb"><label for="garantia-ccb-sim">Sim</label><input type="radio" id="garantia-ccb-na" name="radio-garantia-ccb"><label for="garantia-ccb-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Aditivo: Verificado a existência de aditivo?</label><div class="radio-options"><input type="radio" id="aditivo-sim" name="radio-aditivo"><label for="aditivo-sim">Sim</label><input type="radio" id="aditivo-na" name="radio-aditivo"><label for="aditivo-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Registro da Garantia: Foi devidamente registrado?</label><div class="radio-options"><input type="radio" id="registro-garantia-sim" name="radio-registro-garantia"><label for="registro-garantia-sim">Sim</label><input type="radio" id="registro-garantia-na" name="radio-registro-garantia"><label for="registro-garantia-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Cálculo: Está de acordo com os encargos pactuados?</label><div class="radio-options"><input type="radio" id="calculo-sim" name="radio-calculo"><label for="calculo-sim">Sim</label><input type="radio" id="calculo-na" name="radio-calculo"><label for="calculo-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Data da Mora: Confirmada?</label><div class="radio-options"><input type="radio" id="data-mora-sim" name="radio-data-mora"><label for="data-mora-sim">Sim</label><input type="radio" id="data-mora-na" name="radio-data-mora"><label for="data-mora-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Amortizações: Confirmadas conforme a ficha gráfica/extrato?</label><div class="radio-options"><input type="radio" id="amortizacoes-sim" name="radio-amortizacoes"><label for="amortizacoes-sim">Sim</label><input type="radio" id="amortizacoes-na" name="radio-amortizacoes"><label for="amortizacoes-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Pesquisa de Bens: Foi realizada para todos os devedores?</label><div class="radio-options"><input type="radio" id="pesquisa-bens-sim" name="radio-pesquisa-bens"><label for="pesquisa-bens-sim">Sim</label><input type="radio" id="pesquisa-bens-na" name="radio-pesquisa-bens"><label for="pesquisa-bens-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Situação dos Bens: Confirmada se os bens estão em nome dos devedores?</label><div class="radio-options"><input type="radio" id="situacao-bens-sim" name="radio-situacao-bens"><label for="situacao-bens-sim">Sim</label><input type="radio" id="situacao-bens-na" name="radio-situacao-bens"><label for="situacao-bens-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Dados dos Bens: Conferidos (placa, RENAVAN, chassi, etc.)?</label><div class="radio-options"><input type="radio" id="dados-bens-sim" name="radio-dados-bens"><label for="dados-bens-sim">Sim</label><input type="radio" id="dados-bens-na" name="radio-dados-bens"><label for="dados-bens-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Título Sub-rogado: Verificado se houve formalização da sub-rogação?</label><div class="radio-options"><input type="radio" id="titulo-subrogado-sim" name="radio-titulo-subrogado"><label for="titulo-subrogado-sim">Sim</label><input type="radio" id="titulo-subrogado-na" name="radio-titulo-subrogado"><label for="titulo-subrogado-na">Não se aplica</label></div></div>
-                <div class="form-group-radio track-progress"><label class="question">Valor da Causa: Está de acordo com o cálculo?</label><div class="radio-options"><input type="radio" id="valor-causa-sim" name="radio-valor-causa"><label for="valor-causa-sim">Sim</label><input type="radio" id="valor-causa-na" name="radio-valor-causa"><label for="valor-causa-na">Não se aplica</label></div></div>
-            </form>
+            <div id="tipoAcao" class="tab-content">
+                <div class="form-group full-width">
+                    <label>Selecione o Tipo de Ação:</label>
+                    <div class="custom-select-wrapper" id="action-type-select-wrapper" data-selected-value="execucao">
+                        <div class="custom-select-trigger">
+                            <span id="selected-action-text"><i class="fas fa-balance-scale"></i> Execução</span>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </div>
+                        <ul class="custom-options">
+                            <li class="custom-option selected" data-value="execucao"><i class="fas fa-balance-scale"></i> Execução</li>
+                            <li class="custom-option" data-value="monitoria"><i class="fas fa-file-alt"></i> Monitória</li>
+                            <li class="custom-option" data-value="buscaApreensao"><i class="fas fa-car"></i> Busca e Apreensão</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <form id="content-execucao" class="action-content active">
+                    <h2>Checklist de Execução de Título Extrajudicial</h2>
+                    <div class="form-group-radio track-progress"><label class="question">Prescrição do Título: Analisada?</label><div class="radio-options"><input type="radio" id="exec-prescricao-sim" name="radio-exec-prescricao"><label for="exec-prescricao-sim">Sim</label><input type="radio" id="exec-prescricao-na" name="radio-exec-prescricao"><label for="exec-prescricao-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Multiplicidade de Títulos: Verificado se todas as partes figuram como devedores?</label><div class="radio-options"><input type="radio" id="exec-multiplicidade-sim" name="radio-exec-multiplicidade"><label for="exec-multiplicidade-sim">Sim</label><input type="radio" id="exec-multiplicidade-na" name="radio-exec-multiplicidade"><label for="exec-multiplicidade-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Foro de Ajuizamento: Confirmado?</label><div class="radio-options"><input type="radio" id="exec-foro-sim" name="radio-exec-foro"><label for="exec-foro-sim">Sim</label><input type="radio" id="exec-foro-na" name="radio-exec-foro"><label for="exec-foro-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Dados das Partes: Conferidos (CPF/CNPJ, endereço, etc.)?</label><div class="radio-options"><input type="radio" id="exec-dados-partes-sim" name="radio-exec-dados-partes"><label for="exec-dados-partes-sim">Sim</label><input type="radio" id="exec-dados-partes-na" name="radio-exec-dados-partes"><label for="exec-dados-partes-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Existência de menores incapazes: Solicitou a intimação do Ministério Público?</label><div class="radio-options"><input type="radio" id="exec-menores-sim" name="radio-exec-menores"><label for="exec-menores-sim">Sim</label><input type="radio" id="exec-menores-na" name="radio-exec-menores"><label for="exec-menores-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Assinatura da CCB: Todas as partes assinaram?</label><div class="radio-options"><input type="radio" id="exec-assinatura-ccb-sim" name="radio-exec-assinatura-ccb"><label for="exec-assinatura-ccb-sim">Sim</label><input type="radio" id="exec-assinatura-ccb-na" name="radio-exec-assinatura-ccb"><label for="exec-assinatura-ccb-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Validade das Assinaturas: Confirmada?</label><div class="radio-options"><input type="radio" id="exec-validade-assinaturas-sim" name="radio-exec-validade-assinaturas"><label for="exec-validade-assinaturas-sim">Sim</label><input type="radio" id="exec-validade-assinaturas-na" name="radio-exec-validade-assinaturas"><label for="exec-validade-assinaturas-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Garantia na CCB: Indicada?</label><div class="radio-options"><input type="radio" id="exec-garantia-ccb-sim" name="radio-exec-garantia-ccb"><label for="exec-garantia-ccb-sim">Sim</label><input type="radio" id="exec-garantia-ccb-na" name="radio-exec-garantia-ccb"><label for="exec-garantia-ccb-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Aditivo: Verificado a existência de aditivo?</label><div class="radio-options"><input type="radio" id="exec-aditivo-sim" name="radio-exec-aditivo"><label for="exec-aditivo-sim">Sim</label><input type="radio" id="exec-aditivo-na" name="radio-exec-aditivo"><label for="exec-aditivo-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Registro da Garantia: Foi devidamente registrado?</label><div class="radio-options"><input type="radio" id="exec-registro-garantia-sim" name="radio-exec-registro-garantia"><label for="exec-registro-garantia-sim">Sim</label><input type="radio" id="exec-registro-garantia-na" name="radio-exec-registro-garantia"><label for="exec-registro-garantia-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Cálculo: Está de acordo com os encargos pactuados?</label><div class="radio-options"><input type="radio" id="exec-calculo-sim" name="radio-exec-calculo"><label for="exec-calculo-sim">Sim</label><input type="radio" id="exec-calculo-na" name="radio-exec-calculo"><label for="exec-calculo-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Data da Mora: Confirmada?</label><div class="radio-options"><input type="radio" id="exec-data-mora-sim" name="radio-exec-data-mora"><label for="exec-data-mora-sim">Sim</label><input type="radio" id="exec-data-mora-na" name="radio-exec-data-mora"><label for="exec-data-mora-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Amortizações: Confirmadas conforme a ficha gráfica/extrato?</label><div class="radio-options"><input type="radio" id="exec-amortizacoes-sim" name="radio-exec-amortizacoes"><label for="exec-amortizacoes-sim">Sim</label><input type="radio" id="exec-amortizacoes-na" name="radio-exec-amortizacoes"><label for="exec-amortizacoes-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Pesquisa de Bens: Foi realizada para todos os devedores?</label><div class="radio-options"><input type="radio" id="exec-pesquisa-bens-sim" name="radio-exec-pesquisa-bens"><label for="exec-pesquisa-bens-sim">Sim</label><input type="radio" id="exec-pesquisa-bens-na" name="radio-exec-pesquisa-bens"><label for="exec-pesquisa-bens-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Situação dos Bens: Confirmada se os bens estão em nome dos devedores?</label><div class="radio-options"><input type="radio" id="exec-situacao-bens-sim" name="radio-exec-situacao-bens"><label for="exec-situacao-bens-sim">Sim</label><input type="radio" id="exec-situacao-bens-na" name="radio-exec-situacao-bens"><label for="exec-situacao-bens-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Dados dos Bens: Conferidos (placa, RENAVAN, chassi, etc.)?</label><div class="radio-options"><input type="radio" id="exec-dados-bens-sim" name="radio-exec-dados-bens"><label for="exec-dados-bens-sim">Sim</label><input type="radio" id="exec-dados-bens-na" name="radio-exec-dados-bens"><label for="exec-dados-bens-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Título Sub-rogado: Verificado se houve formalização da sub-rogação?</label><div class="radio-options"><input type="radio" id="exec-titulo-subrogado-sim" name="radio-exec-titulo-subrogado"><label for="exec-titulo-subrogado-sim">Sim</label><input type="radio" id="exec-titulo-subrogado-na" name="radio-exec-titulo-subrogado"><label for="exec-titulo-subrogado-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Valor da Causa: Está de acordo com o cálculo?</label><div class="radio-options"><input type="radio" id="exec-valor-causa-sim" name="radio-exec-valor-causa"><label for="exec-valor-causa-sim">Sim</label><input type="radio" id="exec-valor-causa-na" name="radio-exec-valor-causa"><label for="exec-valor-causa-na">Não se aplica</label></div></div>
+                </form>
+
+                <form id="content-monitoria" class="action-content">
+                    <h2>Checklist de Ação Monitória</h2>
+                    <div class="form-group-radio track-progress"><label class="question">Prescrição do Título: Analisada?</label><div class="radio-options"><input type="radio" id="mon-prescricao-sim" name="radio-mon-prescricao"><label for="mon-prescricao-sim">Sim</label><input type="radio" id="mon-prescricao-na" name="radio-mon-prescricao"><label for="mon-prescricao-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Multiplicidade de Títulos: Verificado se todas as partes figuram como devedores?</label><div class="radio-options"><input type="radio" id="mon-multiplicidade-sim" name="radio-mon-multiplicidade"><label for="mon-multiplicidade-sim">Sim</label><input type="radio" id="mon-multiplicidade-na" name="radio-mon-multiplicidade"><label for="mon-multiplicidade-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Foro de Ajuizamento: Confirmado?</label><div class="radio-options"><input type="radio" id="mon-foro-sim" name="radio-mon-foro"><label for="mon-foro-sim">Sim</label><input type="radio" id="mon-foro-na" name="radio-mon-foro"><label for="mon-foro-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Dados das Partes: Conferidos (CPF/CNPJ, endereço, etc.)?</label><div class="radio-options"><input type="radio" id="mon-dados-partes-sim" name="radio-mon-dados-partes"><label for="mon-dados-partes-sim">Sim</label><input type="radio" id="mon-dados-partes-na" name="radio-mon-dados-partes"><label for="mon-dados-partes-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Existência de menores incapazes: Solicitou a intimação do Ministério Público?</label><div class="radio-options"><input type="radio" id="mon-menores-sim" name="radio-mon-menores"><label for="mon-menores-sim">Sim</label><input type="radio" id="mon-menores-na" name="radio-mon-menores"><label for="mon-menores-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Assinatura da CCB: Todas as partes assinaram?</label><div class="radio-options"><input type="radio" id="mon-assinatura-ccb-sim" name="radio-mon-assinatura-ccb"><label for="mon-assinatura-ccb-sim">Sim</label><input type="radio" id="mon-assinatura-ccb-na" name="radio-mon-assinatura-ccb"><label for="mon-assinatura-ccb-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Validade das Assinaturas: Confirmada?</label><div class="radio-options"><input type="radio" id="mon-validade-assinaturas-sim" name="radio-mon-validade-assinaturas"><label for="mon-validade-assinaturas-sim">Sim</label><input type="radio" id="mon-validade-assinaturas-na" name="radio-mon-validade-assinaturas"><label for="mon-validade-assinaturas-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Cálculo: Está de acordo com os encargos pactuados?</label><div class="radio-options"><input type="radio" id="mon-calculo-sim" name="radio-mon-calculo"><label for="mon-calculo-sim">Sim</label><input type="radio" id="mon-calculo-na" name="radio-mon-calculo"><label for="mon-calculo-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Data da Mora: Confirmada?</label><div class="radio-options"><input type="radio" id="mon-data-mora-sim" name="radio-mon-data-mora"><label for="mon-data-mora-sim">Sim</label><input type="radio" id="mon-data-mora-na" name="radio-mon-data-mora"><label for="mon-data-mora-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Cláusulas Gerais/Contratos: Verificadas e anexadas?</label><div class="radio-options"><input type="radio" id="mon-clausulas-sim" name="radio-mon-clausulas"><label for="mon-clausulas-sim">Sim</label><input type="radio" id="mon-clausulas-na" name="radio-mon-clausulas"><label for="mon-clausulas-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Documentos Comprobatórios: Verificado se há extratos, faturas, fichas gráficas?</label><div class="radio-options"><input type="radio" id="mon-documentos-sim" name="radio-mon-documentos"><label for="mon-documentos-sim">Sim</label><input type="radio" id="mon-documentos-na" name="radio-mon-documentos"><label for="mon-documentos-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Título Sub-rogado: Verificado se houve formalização da sub-rogação?</label><div class="radio-options"><input type="radio" id="mon-titulo-subrogado-sim" name="radio-mon-titulo-subrogado"><label for="mon-titulo-subrogado-sim">Sim</label><input type="radio" id="mon-titulo-subrogado-na" name="radio-mon-titulo-subrogado"><label for="mon-titulo-subrogado-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Valor da Causa: Está de acordo com o cálculo?</label><div class="radio-options"><input type="radio" id="mon-valor-causa-sim" name="radio-mon-valor-causa"><label for="mon-valor-causa-sim">Sim</label><input type="radio" id="mon-valor-causa-na" name="radio-mon-valor-causa"><label for="mon-valor-causa-na">Não se aplica</label></div></div>
+                </form>
+
+                <form id="content-buscaApreensao" class="action-content">
+                    <h2>Checklist de Busca e Apreensão</h2>
+                    <div class="form-group-radio track-progress"><label class="question">Prescrição do Título: Analisada?</label><div class="radio-options"><input type="radio" id="ba-prescricao-sim" name="radio-ba-prescricao"><label for="ba-prescricao-sim">Sim</label><input type="radio" id="ba-prescricao-na" name="radio-ba-prescricao"><label for="ba-prescricao-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Foro de Ajuizamento: Confirmado?</label><div class="radio-options"><input type="radio" id="ba-foro-sim" name="radio-ba-foro"><label for="ba-foro-sim">Sim</label><input type="radio" id="ba-foro-na" name="radio-ba-foro"><label for="ba-foro-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Dados das Partes: Conferidos (CPF/CNPJ, endereço, etc.)?</label><div class="radio-options"><input type="radio" id="ba-dados-partes-sim" name="radio-ba-dados-partes"><label for="ba-dados-partes-sim">Sim</label><input type="radio" id="ba-dados-partes-na" name="radio-ba-dados-partes"><label for="ba-dados-partes-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Existência de menores incapazes: Solicitou a intimação do Ministério Público?</label><div class="radio-options"><input type="radio" id="ba-menores-sim" name="radio-ba-menores"><label for="ba-menores-sim">Sim</label><input type="radio" id="ba-menores-na" name="radio-ba-menores"><label for="ba-menores-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Assinatura da CCB: Todas as partes assinaram?</label><div class="radio-options"><input type="radio" id="ba-assinatura-ccb-sim" name="radio-ba-assinatura-ccb"><label for="ba-assinatura-ccb-sim">Sim</label><input type="radio" id="ba-assinatura-ccb-na" name="radio-ba-assinatura-ccb"><label for="ba-assinatura-ccb-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Validade das Assinaturas: Confirmada?</label><div class="radio-options"><input type="radio" id="ba-validade-assinaturas-sim" name="radio-ba-validade-assinaturas"><label for="ba-validade-assinaturas-sim">Sim</label><input type="radio" id="ba-validade-assinaturas-na" name="radio-ba-validade-assinaturas"><label for="ba-validade-assinaturas-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Garantia na CCB: Indicada?</label><div class="radio-options"><input type="radio" id="ba-garantia-ccb-sim" name="radio-ba-garantia-ccb"><label for="ba-garantia-ccb-sim">Sim</label><input type="radio" id="ba-garantia-ccb-na" name="radio-ba-garantia-ccb"><label for="ba-garantia-ccb-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Registro da Garantia: Foi devidamente registrado?</label><div class="radio-options"><input type="radio" id="ba-registro-garantia-sim" name="radio-ba-registro-garantia"><label for="ba-registro-garantia-sim">Sim</label><input type="radio" id="ba-registro-garantia-na" name="radio-ba-registro-garantia"><label for="ba-registro-garantia-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Cálculo: Está de acordo com os encargos pactuados?</label><div class="radio-options"><input type="radio" id="ba-calculo-sim" name="radio-ba-calculo"><label for="ba-calculo-sim">Sim</label><input type="radio" id="ba-calculo-na" name="radio-ba-calculo"><label for="ba-calculo-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Data da Mora: Confirmada?</label><div class="radio-options"><input type="radio" id="ba-data-mora-sim" name="radio-ba-data-mora"><label for="ba-data-mora-sim">Sim</label><input type="radio" id="ba-data-mora-na" name="radio-ba-data-mora"><label for="ba-data-mora-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Pesquisa de Bens: Foi realizada para todos os devedores?</label><div class="radio-options"><input type="radio" id="ba-pesquisa-bens-sim" name="radio-ba-pesquisa-bens"><label for="ba-pesquisa-bens-sim">Sim</label><input type="radio" id="ba-pesquisa-bens-na" name="radio-ba-pesquisa-bens"><label for="ba-pesquisa-bens-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Dados dos Bens: Conferidos (placa, RENAVAN, chassi, etc.)?</label><div class="radio-options"><input type="radio" id="ba-dados-bens-sim" name="radio-ba-dados-bens"><label for="ba-dados-bens-sim">Sim</label><input type="radio" id="ba-dados-bens-na" name="radio-ba-dados-bens"><label for="ba-dados-bens-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Título Sub-rogado: Verificado se houve formalização da sub-rogação?</label><div class="radio-options"><input type="radio" id="ba-titulo-subrogado-sim" name="radio-ba-titulo-subrogado"><label for="ba-titulo-subrogado-sim">Sim</label><input type="radio" id="ba-titulo-subrogado-na" name="radio-ba-titulo-subrogado"><label for="ba-titulo-subrogado-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Notificação em Mora: Foi enviada ao endereço constante no contrato?</label><div class="radio-options"><input type="radio" id="ba-notificacao-mora-sim" name="radio-ba-notificacao-mora"><label for="ba-notificacao-mora-sim">Sim</label><input type="radio" id="ba-notificacao-mora-na" name="radio-ba-notificacao-mora"><label for="ba-notificacao-mora-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Notificação em Endereço Diverso: Caso tenha sido enviada para endereço diverso, foi recebida?</label><div class="radio-options"><input type="radio" id="ba-notificacao-diverso-sim" name="radio-ba-notificacao-diverso"><label for="ba-notificacao-diverso-sim">Sim</label><input type="radio" id="ba-notificacao-diverso-na" name="radio-ba-notificacao-diverso"><label for="ba-notificacao-diverso-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Valor do Veiculo: É aproximado ao valor da dívida?</label><div class="radio-options"><input type="radio" id="ba-valor-veiculo-sim" name="radio-ba-valor-veiculo"><label for="ba-valor-veiculo-sim">Sim</label><input type="radio" id="ba-valor-veiculo-na" name="radio-ba-valor-veiculo"><label for="ba-valor-veiculo-na">Não se aplica</label></div></div>
+                    <div class="form-group-radio track-progress"><label class="question">Valor da Causa: Está de acordo com o cálculo?</label><div class="radio-options"><input type="radio" id="ba-valor-causa-sim" name="radio-ba-valor-causa"><label for="ba-valor-causa-sim">Sim</label><input type="radio" id="ba-valor-causa-na" name="radio-ba-valor-causa"><label for="ba-valor-causa-na">Não se aplica</label></div></div>
+                </form>
+            </div>
         </main>
+
+        <section class="assinaturas-section">
+            <h2>Assinaturas</h2>
+            <div class="assinatura-content">
+                <div class="form-group">
+                    <label for="assinante-nome">Nome do Assinante *</label>
+                    <input type="text" id="assinante-nome" placeholder="Digite seu nome ou iniciais">
+                </div>
+                <button id="btn-assinar">Assinar Documento</button>
+            </div>
+            <div class="assinatura-resultado" id="assinatura-digital">
+                </div>
+        </section>
+
     </div>
 
 </body>
